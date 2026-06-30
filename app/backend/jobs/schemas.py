@@ -24,6 +24,7 @@ class JobRead(BaseModel):
     is_applied: bool
     applied_at: datetime | None = None
     is_favorite: bool
+    generated_cv_path: str | None = None
     user_comments: str | None = None
     status: str
 
@@ -31,6 +32,6 @@ class JobRead(BaseModel):
 class JobUpdate(BaseModel):
     is_applied: bool | None = None
     is_favorite: bool | None = None
+    generated_cv_path: str | None = None
     user_comments: str | None = None
     status: str | None = None
-

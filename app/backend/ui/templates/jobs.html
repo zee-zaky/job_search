@@ -6,11 +6,27 @@
       <h1>Jobs</h1>
       <p class="result-count">{{ job_count }} {{ "job" if job_count == 1 else "jobs" }} displayed</p>
     </div>
-    <form method="post" action="/ingestion/run">
+    <form method="post" action="/ingestion/run" class="ingestion-form">
+      <label for="max_pages_per_source">Pages per search</label>
+      <input
+        id="max_pages_per_source"
+        name="max_pages_per_source"
+        type="number"
+        min="1"
+        max="{{ max_pages_per_source }}"
+        value="{{ default_pages_per_source }}"
+      >
       <button type="submit">Update Jobs Now</button>
     </form>
   </div>
   <form method="get" action="/" class="filters">
+    <label for="source_id">Source</label>
+    <select id="source_id" name="source_id">
+      <option value="">All sources</option>
+      {% for source in sources %}
+        <option value="{{ source.id }}" {% if source.id == selected_source_id %}selected{% endif %}>{{ source.name }}</option>
+      {% endfor %}
+    </select>
     <label for="city_location">Location</label>
     <select id="city_location" name="city_location">
       <option value="">All locations</option>
@@ -25,9 +41,44 @@
         <option value="{{ employment_type }}" {% if employment_type == selected_employment_type %}selected{% endif %}>{{ employment_type }}</option>
       {% endfor %}
     </select>
+    <label for="favorite_filter">Favorites</label>
+    <select id="favorite_filter" name="favorite_filter">
+      <option value="" {% if not selected_favorite_filter %}selected{% endif %}>Show all</option>
+      <option value="favorites" {% if selected_favorite_filter == "favorites" %}selected{% endif %}>Favorites only</option>
+      <option value="hide_favorites" {% if selected_favorite_filter == "hide_favorites" %}selected{% endif %}>Hide favorites</option>
+    </select>
     <button type="submit">Filter</button>
-    {% if selected_location or selected_employment_type %}<a href="/">Clear</a>{% endif %}
+    {% if selected_source_id or selected_location or selected_employment_type or selected_favorite_filter %}<a href="/">Clear</a>{% endif %}
   </form>
+  <section class="source-status">
+    <h2>Sources</h2>
+    <div class="source-grid">
+      {% for summary in source_summaries %}
+        <article class="source-card">
+          <div>
+            <h3>{{ summary.source.name }}</h3>
+            <p>{{ summary.job_count }} jobs</p>
+            <p>Status: {{ summary.last_status }}</p>
+            {% if summary.last_run_at %}<p>Last run: {{ summary.last_run_at }}</p>{% endif %}
+            {% if summary.last_error %}<p class="error-text">{{ summary.last_error }}</p>{% endif %}
+          </div>
+          <form method="post" action="/ingestion/run" class="source-ingestion-form">
+            <input type="hidden" name="source_id" value="{{ summary.source.id }}">
+            <label for="max_pages_per_source_{{ summary.source.id }}">Pages</label>
+            <input
+              id="max_pages_per_source_{{ summary.source.id }}"
+              name="max_pages_per_source"
+              type="number"
+              min="1"
+              max="{{ max_pages_per_source }}"
+              value="{{ default_pages_per_source }}"
+            >
+            <button type="submit">Update source</button>
+          </form>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
   {% if jobs %}
     <div class="job-grid">
       {% for job in jobs %}
@@ -35,6 +86,7 @@
           <div>
             <h2>{{ job.job_title }}</h2>
             <p>{{ job.employer_name or "Unknown employer" }}</p>
+            <p>{{ job.source.name if job.source else job.provider }}</p>
             <p>{{ job.city_location or "Location unavailable" }}</p>
             <p>{{ job.employment_type or "Employment type unavailable" }}</p>
             <p>Posted: {{ job.posted_at.strftime("%Y-%m-%d") if job.posted_at else "Unavailable" }}</p>
@@ -45,6 +97,11 @@
             {% if job.is_applied %}<span>Applied</span>{% endif %}
           </div>
           <div class="actions">
+            {% if job.is_favorite %}
+              <form method="post" action="/jobs/{{ job.id }}/unfavorite"><button type="submit">Unstar</button></form>
+            {% else %}
+              <form method="post" action="/jobs/{{ job.id }}/favorite"><button type="submit">Star</button></form>
+            {% endif %}
             <a href="{{ job.job_url }}" target="_blank" rel="noreferrer">Open</a>
             <a href="/jobs/{{ job.id }}">Details</a>
           </div>

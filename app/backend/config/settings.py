@@ -17,7 +17,8 @@ class Settings(BaseSettings):
     request_timeout_seconds: float = 20
     connect_timeout_seconds: float = 5
     max_retries: int = 2
-    default_request_delay_seconds: float = 2
+    default_request_delay_seconds: float = 5
+    default_pages_per_source: int = 2
     max_pages_per_source: int = 10
     max_discovered_jobs_per_source: int = 300
     max_detail_fetches_per_source_run: int = 300

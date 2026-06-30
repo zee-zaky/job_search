@@ -7,10 +7,33 @@ sources:
     search_url: "https://nz.seek.com/artificial-intelligence-jobs-in-information-communication-technology?sortmode=ListedDate"
     schedule_minutes: 60
 
+  - name: "SEEK Business Analyst Jobs NZ"
+    provider: "seek"
+    description: "SEEK business analyst job listings for New Zealand"
+    enabled: true
+    ingestion_mode: "html_scraper"
+    search_url: "https://nz.seek.com/business-analyist-jobs-in-information-communication-technology?sortmode=ListedDate"
+    schedule_minutes: 60
+
+  - name: "SEEK Integration Architect Jobs NZ"
+    provider: "seek"
+    description: "SEEK integration architect job listings for New Zealand"
+    enabled: true
+    ingestion_mode: "html_scraper"
+    search_url: "https://nz.seek.com/integration-architect-jobs-in-information-communication-technology?sortmode=ListedDate"
+    schedule_minutes: 60
+
+  - name: "SEEK Product Manager Jobs NZ"
+    provider: "seek"
+    description: "SEEK product manager job listings for New Zealand"
+    enabled: true
+    ingestion_mode: "html_scraper"
+    search_url: "https://nz.seek.com/product-manager-jobs-in-information-communication-technology?sortmode=ListedDate"
+    schedule_minutes: 60
+
   - name: "Manual SEEK Import"
     provider: "seek"
     description: "Paste individual SEEK job URLs for manual import"
     enabled: true
     ingestion_mode: "manual_import"
     schedule_minutes: 60
-

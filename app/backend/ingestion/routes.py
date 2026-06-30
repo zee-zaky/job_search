@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.backend.config.settings import get_settings
 from app.backend.db.models import IngestionRun, JobSource
 from app.backend.db.session import get_db
 from app.backend.ingestion.schemas import IngestionRunRequest, ManualImportRequest
@@ -17,7 +18,10 @@ ui_router = APIRouter(tags=["ui"])
 
 @api_router.post("/run")
 async def trigger_ingestion(payload: IngestionRunRequest | None = None, db: Session = Depends(get_db)):
-    run = await IngestionService(db).run(payload.source_id if payload else None)
+    run = await IngestionService(db).run(
+        payload.source_id if payload else None,
+        payload.max_pages_per_source if payload else None,
+    )
     return run
 
 
@@ -47,8 +51,14 @@ def import_page(request: Request, db: Session = Depends(get_db)):
 
 
 @ui_router.post("/ingestion/run")
-async def trigger_ingestion_form(db: Session = Depends(get_db)):
-    await IngestionService(db).run()
+async def trigger_ingestion_form(
+    source_id: str | None = Form(default=None),
+    max_pages_per_source: int | None = Form(default=None, ge=1),
+    db: Session = Depends(get_db),
+):
+    settings = get_settings()
+    requested_pages = min(max_pages_per_source, settings.max_pages_per_source) if max_pages_per_source else None
+    await IngestionService(db).run(source_id or None, requested_pages)
     return RedirectResponse("/", status_code=303)
 
 

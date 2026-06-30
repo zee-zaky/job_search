@@ -80,6 +80,7 @@ class Job(Base, TimestampMixin):
     is_applied: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     applied_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     is_favorite: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    generated_cv_path: Mapped[str | None] = mapped_column(Text)
     user_comments: Mapped[str | None] = mapped_column(Text)
     status: Mapped[str] = mapped_column(String, default="new", nullable=False)
 

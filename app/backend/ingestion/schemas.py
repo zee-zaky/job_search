@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class DiscoveredJob(BaseModel):
@@ -38,4 +38,4 @@ class ManualImportRequest(BaseModel):
 
 class IngestionRunRequest(BaseModel):
     source_id: str | None = None
-
+    max_pages_per_source: int | None = Field(default=None, ge=1)

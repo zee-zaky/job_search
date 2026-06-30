@@ -36,6 +36,10 @@ button,
   cursor: pointer;
 }
 
+.actions form {
+  margin: 0;
+}
+
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -69,7 +73,9 @@ nav {
 .panel-heading,
 .actions,
 .badges,
-.filters {
+.filters,
+.ingestion-form,
+.source-ingestion-form {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -84,6 +90,52 @@ nav {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
+}
+
+.source-status {
+  margin: 1rem 0;
+}
+
+.source-status h2 {
+  font-size: 1.1rem;
+}
+
+.source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.source-card {
+  display: grid;
+  gap: 0.75rem;
+  border: 1px solid var(--line);
+  padding: 0.85rem;
+  background: #fff;
+}
+
+.source-card h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.source-card p {
+  margin: 0.15rem 0;
+  color: var(--muted);
+}
+
+.ingestion-form input,
+.source-ingestion-form input {
+  width: 6rem;
+}
+
+.source-ingestion-form {
+  align-items: end;
+}
+
+.error-text {
+  color: #9d2d20;
+  overflow-wrap: anywhere;
 }
 
 .filters {

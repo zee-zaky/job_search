@@ -5,8 +5,9 @@ from datetime import datetime
 from sqlalchemy import Select, distinct, func, or_, select
 from sqlalchemy.orm import Session
 
-from app.backend.db.models import Job, utc_now
-from app.backend.ingestion.schemas import ParsedJob
+from app.backend.db.models import Job, JobSource, utc_now
+from app.backend.ingestion.schemas import DiscoveredJob, ParsedJob
+from app.backend.ingestion.url_utils import canonicalize_url
 
 
 def content_hash(parsed: ParsedJob) -> str:
@@ -103,8 +104,17 @@ class JobRepository:
         stmt = select(distinct(Job.employment_type)).where(Job.employment_type.is_not(None)).order_by(Job.employment_type)
         return [employment_type for employment_type in self.db.scalars(stmt) if employment_type]
 
+    def list_sources(self) -> list[JobSource]:
+        return list(self.db.scalars(select(JobSource).where(JobSource.ingestion_mode == "html_scraper").order_by(JobSource.name)))
+
     def get(self, job_id: str) -> Job | None:
         return self.db.get(Job, job_id)
+
+    def find_existing_discovered(self, discovered: DiscoveredJob) -> Job | None:
+        lookup = [Job.canonical_url == canonicalize_url(discovered.job_url)]
+        if discovered.external_job_id:
+            lookup.append(Job.external_job_id == discovered.external_job_id)
+        return self.db.scalar(select(Job).where(Job.provider == discovered.provider, or_(*lookup)))
 
     def upsert_from_parsed(self, parsed: ParsedJob) -> tuple[Job, str]:
         now = utc_now()
@@ -141,11 +151,21 @@ class JobRepository:
         job.raw_payload = json.dumps(parsed.raw_payload) if parsed.raw_payload is not None else None
         return job, action
 
-    def update_user_fields(self, job: Job, is_applied: bool | None, is_favorite: bool | None, user_comments: str | None, status: str | None) -> Job:
+    def update_user_fields(
+        self,
+        job: Job,
+        is_applied: bool | None,
+        is_favorite: bool | None,
+        user_comments: str | None,
+        status: str | None,
+        generated_cv_path: str | None = None,
+    ) -> Job:
         if is_favorite is not None:
             job.is_favorite = is_favorite
         if user_comments is not None:
             job.user_comments = user_comments
+        if generated_cv_path is not None:
+            job.generated_cv_path = generated_cv_path or None
         if status is not None:
             job.status = status
         if is_applied is not None:
