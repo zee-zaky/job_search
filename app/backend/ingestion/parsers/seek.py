@@ -1,7 +1,7 @@
 import json
 import re
 from datetime import datetime
-from urllib.parse import urljoin
+from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 
 from bs4 import BeautifulSoup
 
@@ -37,6 +37,11 @@ class SeekParser:
             )
         return list(discovered.values())
 
+    def search_page_urls(self, source: JobSource, first_page_html: str, final_url: str, max_pages: int) -> list[str]:
+        if not source.search_url or max_pages <= 1:
+            return []
+        return [self._with_page(source.search_url, page) for page in range(2, max_pages + 1)]
+
     def parse_job_detail(self, discovered_job: DiscoveredJob, html: str, final_url: str) -> ParsedJob:
         soup = BeautifulSoup(html, "html.parser")
         json_ld = self._json_ld(soup)
@@ -46,6 +51,7 @@ class SeekParser:
         description = self._first_html(soup, ['[data-automation="jobAdDetails"]', "article"])
         posted_at = self._parse_posted_at(json_ld.get("datePosted")) if json_ld else None
         posted_at = posted_at or self._parse_listed_at(html)
+        employment_type = self._parse_work_type(html)
 
         if json_ld:
             title = title or json_ld.get("title")
@@ -54,6 +60,7 @@ class SeekParser:
             location = location or self._location_from_json_ld(json_ld)
             description = description or json_ld.get("description")
             posted_at = posted_at or self._parse_posted_at(json_ld.get("validThrough"))
+            employment_type = employment_type or self._normalize_work_type(json_ld.get("employmentType"))
 
         title = title or discovered_job.title_hint
         if not title:
@@ -68,7 +75,7 @@ class SeekParser:
             city_location=location or discovered_job.location_hint,
             job_title=title,
             employer_name=employer or discovered_job.employer_hint,
-            employment_type=json_ld.get("employmentType") if json_ld else None,
+            employment_type=employment_type,
             salary_range=None,
             description=description,
             posted_at=posted_at,
@@ -136,3 +143,31 @@ class SeekParser:
     def _parse_listed_at(self, html: str) -> datetime | None:
         match = re.search(r'"listedAt":\{.*?"dateTimeUtc":"([^"]+)"', html)
         return self._parse_posted_at(match.group(1)) if match else None
+
+    def _parse_work_type(self, html: str) -> str | None:
+        list_match = re.search(r'"workTypes":\{[^{}]*"label":\["([^"]+)"\]', html)
+        if list_match:
+            return self._normalize_work_type(list_match.group(1))
+        text_match = re.search(r'"workTypes":\{[^{}]*"label":"([^"]+)"', html)
+        if text_match:
+            return self._normalize_work_type(text_match.group(1))
+        return None
+
+    def _normalize_work_type(self, value: str | list | None) -> str | None:
+        if isinstance(value, list):
+            value = value[0] if value else None
+        if not isinstance(value, str) or not value:
+            return None
+        normalized = value.replace("_", " ").replace("-", " ").strip().lower()
+        return " ".join(normalized.split()).capitalize()
+
+    def _parse_total_jobs(self, html: str) -> int | None:
+        candidates = [int(value) for value in re.findall(r'"totalCount":(\d+)', html)]
+        candidates.extend(int(value.replace(",", "")) for value in re.findall(r'(\d[\d,]*)\s+jobs?', html, re.IGNORECASE))
+        return max(candidates) if candidates else None
+
+    def _with_page(self, url: str, page: int) -> str:
+        parts = urlsplit(url)
+        query = [(key, value) for key, value in parse_qsl(parts.query, keep_blank_values=True) if key != "page"]
+        query.append(("page", str(page)))
+        return urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(query), parts.fragment))

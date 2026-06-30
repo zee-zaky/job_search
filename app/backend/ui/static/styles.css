@@ -111,6 +111,11 @@ nav {
   color: var(--muted);
 }
 
+.result-count {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+}
+
 .badges span {
   border: 1px solid var(--line);
   padding: 0.2rem 0.45rem;

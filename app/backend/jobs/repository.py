@@ -2,7 +2,7 @@ import hashlib
 import json
 from datetime import datetime
 
-from sqlalchemy import Select, distinct, or_, select
+from sqlalchemy import Select, distinct, func, or_, select
 from sqlalchemy.orm import Session
 
 from app.backend.db.models import Job, utc_now
@@ -32,6 +32,7 @@ class JobRepository:
         provider: str | None = None,
         source_id: str | None = None,
         city_location: str | None = None,
+        employment_type: str | None = None,
         status: str | None = None,
         is_applied: bool | None = None,
         is_favorite: bool | None = None,
@@ -48,6 +49,8 @@ class JobRepository:
             stmt = stmt.where(Job.source_id == source_id)
         if city_location:
             stmt = stmt.where(Job.city_location == city_location)
+        if employment_type:
+            stmt = stmt.where(Job.employment_type == employment_type)
         if status:
             stmt = stmt.where(Job.status == status)
         if is_applied is not None:
@@ -61,9 +64,44 @@ class JobRepository:
         )
         return list(self.db.scalars(stmt))
 
+    def count_jobs(
+        self,
+        q: str | None = None,
+        provider: str | None = None,
+        source_id: str | None = None,
+        city_location: str | None = None,
+        employment_type: str | None = None,
+        status: str | None = None,
+        is_applied: bool | None = None,
+        is_favorite: bool | None = None,
+    ) -> int:
+        stmt = select(func.count()).select_from(Job)
+        if q:
+            like = f"%{q}%"
+            stmt = stmt.where(or_(Job.job_title.ilike(like), Job.employer_name.ilike(like), Job.description.ilike(like)))
+        if provider:
+            stmt = stmt.where(Job.provider == provider)
+        if source_id:
+            stmt = stmt.where(Job.source_id == source_id)
+        if city_location:
+            stmt = stmt.where(Job.city_location == city_location)
+        if employment_type:
+            stmt = stmt.where(Job.employment_type == employment_type)
+        if status:
+            stmt = stmt.where(Job.status == status)
+        if is_applied is not None:
+            stmt = stmt.where(Job.is_applied == is_applied)
+        if is_favorite is not None:
+            stmt = stmt.where(Job.is_favorite == is_favorite)
+        return self.db.scalar(stmt) or 0
+
     def list_locations(self) -> list[str]:
         stmt = select(distinct(Job.city_location)).where(Job.city_location.is_not(None)).order_by(Job.city_location)
         return [location for location in self.db.scalars(stmt) if location]
+
+    def list_employment_types(self) -> list[str]:
+        stmt = select(distinct(Job.employment_type)).where(Job.employment_type.is_not(None)).order_by(Job.employment_type)
+        return [employment_type for employment_type in self.db.scalars(stmt) if employment_type]
 
     def get(self, job_id: str) -> Job | None:
         return self.db.get(Job, job_id)

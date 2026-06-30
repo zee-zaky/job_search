@@ -20,6 +20,7 @@ def list_jobs(
     provider: str | None = None,
     source_id: str | None = None,
     city_location: str | None = None,
+    employment_type: str | None = None,
     status: str | None = None,
     is_applied: bool | None = None,
     is_favorite: bool | None = None,
@@ -27,7 +28,9 @@ def list_jobs(
     page_size: int = 50,
     db: Session = Depends(get_db),
 ):
-    return JobRepository(db).query_jobs(q, provider, source_id, city_location, status, is_applied, is_favorite, page, page_size)
+    return JobRepository(db).query_jobs(
+        q, provider, source_id, city_location, employment_type, status, is_applied, is_favorite, page, page_size
+    )
 
 
 @api_router.get("/{job_id}", response_model=JobRead)
@@ -94,14 +97,28 @@ def unfavorite_job(job_id: str, db: Session = Depends(get_db)):
 
 
 @ui_router.get("/", response_class=HTMLResponse)
-def jobs_page(request: Request, city_location: str | None = None, db: Session = Depends(get_db)):
+def jobs_page(
+    request: Request,
+    city_location: str | None = None,
+    employment_type: str | None = None,
+    db: Session = Depends(get_db),
+):
     repo = JobRepository(db)
-    jobs = repo.query_jobs(city_location=city_location, page_size=100)
+    jobs = repo.query_jobs(city_location=city_location, employment_type=employment_type, page_size=1000)
+    job_count = repo.count_jobs(city_location=city_location, employment_type=employment_type)
     locations = repo.list_locations()
+    employment_types = repo.list_employment_types()
     return templates.TemplateResponse(
         request,
         "jobs.html",
-        {"jobs": jobs, "locations": locations, "selected_location": city_location or ""},
+        {
+            "jobs": jobs,
+            "job_count": job_count,
+            "locations": locations,
+            "employment_types": employment_types,
+            "selected_location": city_location or "",
+            "selected_employment_type": employment_type or "",
+        },
     )
 
 

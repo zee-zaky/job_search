@@ -1,5 +1,6 @@
 import json
 from dataclasses import dataclass, field
+from typing import Any
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -7,7 +8,8 @@ from sqlalchemy.orm import Session
 from app.backend.db.models import IngestionRun, IngestionRunSource, JobSource, utc_now
 from app.backend.ingestion.fetcher import Fetcher
 from app.backend.ingestion.registry import ParserRegistry, registry
-from app.backend.ingestion.schemas import ManualImportRequest
+from app.backend.ingestion.schemas import DiscoveredJob, ManualImportRequest
+from app.backend.ingestion.url_utils import canonicalize_url
 from app.backend.jobs.repository import JobRepository
 
 
@@ -97,6 +99,7 @@ class IngestionService:
 
     async def _run_source(self, run_id: str, source: JobSource) -> RunCounts:
         child = self._start_source_run(run_id, source)
+        self.db.commit()
         counts = RunCounts()
         try:
             parser = self.registry.get(source.provider)
@@ -104,29 +107,53 @@ class IngestionService:
             if not source.search_url:
                 raise ValueError("html_scraper source requires search_url")
             fetched = await self.fetcher.fetch(source.search_url)
-            discovered = parser.discover_job_links(source, fetched.text, fetched.final_url)
-            for item in discovered[: self.fetcher.settings.max_detail_fetches_per_source_run]:
+            discovered = self._dedupe_discovered(parser.discover_job_links(source, fetched.text, fetched.final_url))
+            for page_url in self._search_page_urls(parser, source, fetched.text, fetched.final_url):
+                if len(discovered) >= self.fetcher.settings.max_discovered_jobs_per_source:
+                    break
+                page = await self.fetcher.fetch(page_url)
+                discovered.update(self._dedupe_discovered(parser.discover_job_links(source, page.text, page.final_url)))
+            for item in list(discovered.values())[: self.fetcher.settings.max_detail_fetches_per_source_run]:
                 try:
                     detail = await self.fetcher.fetch(item.job_url)
                     parsed = parser.parse_job_detail(item, detail.text, detail.final_url)
                     _, action = self.jobs.upsert_from_parsed(parsed)
+                    self.db.commit()
                     if action == "created":
                         counts.new_jobs_count += 1
                     else:
                         counts.updated_jobs_count += 1
                 except Exception as exc:
+                    self.db.rollback()
                     counts.error_count += 1
                     counts.errors.append({"error_code": "PARSE_FAILED", "message": str(exc), "job_url": item.job_url})
             source.last_success_at = utc_now()
             child.status = "success" if counts.error_count == 0 else "partial_failure"
         except Exception as exc:
+            self.db.rollback()
             counts.error_count += 1
             counts.errors.append({"error_code": "SOURCE_FAILED", "message": str(exc), "source_id": source.id})
+            child = self.db.get(IngestionRunSource, child.id) or child
             child.status = "failed"
         finally:
+            source = self.db.get(JobSource, source.id) or source
+            child = self.db.get(IngestionRunSource, child.id) or child
             source.last_run_at = utc_now()
             self._finish_source_run(child, counts)
+            self.db.commit()
         return counts
+
+    def _search_page_urls(self, parser: Any, source: JobSource, first_page_html: str, final_url: str) -> list[str]:
+        if hasattr(parser, "search_page_urls"):
+            return parser.search_page_urls(source, first_page_html, final_url, self.fetcher.settings.max_pages_per_source)
+        return []
+
+    def _dedupe_discovered(self, discovered: list[DiscoveredJob]) -> dict[str, DiscoveredJob]:
+        deduped: dict[str, DiscoveredJob] = {}
+        for item in discovered:
+            key = f"{item.provider}:{item.external_job_id}" if item.external_job_id else canonicalize_url(item.job_url)
+            deduped[key] = item
+        return deduped
 
     def _start_source_run(self, run_id: str, source: JobSource) -> IngestionRunSource:
         child = IngestionRunSource(
@@ -163,4 +190,3 @@ class IngestionService:
         target.skipped_jobs_count += source.skipped_jobs_count
         target.error_count += source.error_count
         target.errors.extend(source.errors)
-

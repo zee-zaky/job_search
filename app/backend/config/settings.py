@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     connect_timeout_seconds: float = 5
     max_retries: int = 2
     default_request_delay_seconds: float = 2
-    max_pages_per_source: int = 3
-    max_discovered_jobs_per_source: int = 100
-    max_detail_fetches_per_source_run: int = 50
+    max_pages_per_source: int = 10
+    max_discovered_jobs_per_source: int = 300
+    max_detail_fetches_per_source_run: int = 300
     max_response_bytes: int = 5 * 1024 * 1024
     user_agent: str = "JobSearchTracker/0.1 (+local personal job tracking app)"
 
@@ -28,4 +28,3 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
-

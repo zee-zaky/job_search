@@ -2,7 +2,10 @@
 {% block content %}
 <section class="panel">
   <div class="panel-heading">
-    <h1>Jobs</h1>
+    <div>
+      <h1>Jobs</h1>
+      <p class="result-count">{{ job_count }} {{ "job" if job_count == 1 else "jobs" }} displayed</p>
+    </div>
     <form method="post" action="/ingestion/run">
       <button type="submit">Update Jobs Now</button>
     </form>
@@ -15,8 +18,15 @@
         <option value="{{ location }}" {% if location == selected_location %}selected{% endif %}>{{ location }}</option>
       {% endfor %}
     </select>
+    <label for="employment_type">Employment type</label>
+    <select id="employment_type" name="employment_type">
+      <option value="">All employment types</option>
+      {% for employment_type in employment_types %}
+        <option value="{{ employment_type }}" {% if employment_type == selected_employment_type %}selected{% endif %}>{{ employment_type }}</option>
+      {% endfor %}
+    </select>
     <button type="submit">Filter</button>
-    {% if selected_location %}<a href="/">Clear</a>{% endif %}
+    {% if selected_location or selected_employment_type %}<a href="/">Clear</a>{% endif %}
   </form>
   {% if jobs %}
     <div class="job-grid">
@@ -26,6 +36,7 @@
             <h2>{{ job.job_title }}</h2>
             <p>{{ job.employer_name or "Unknown employer" }}</p>
             <p>{{ job.city_location or "Location unavailable" }}</p>
+            <p>{{ job.employment_type or "Employment type unavailable" }}</p>
             <p>Posted: {{ job.posted_at.strftime("%Y-%m-%d") if job.posted_at else "Unavailable" }}</p>
           </div>
           <div class="badges">
