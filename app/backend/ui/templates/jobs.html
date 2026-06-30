@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <div class="panel-heading">
+    <h1>Jobs</h1>
+    <form method="post" action="/ingestion/run">
+      <button type="submit">Update Jobs Now</button>
+    </form>
+  </div>
+  <form method="get" action="/" class="filters">
+    <label for="city_location">Location</label>
+    <select id="city_location" name="city_location">
+      <option value="">All locations</option>
+      {% for location in locations %}
+        <option value="{{ location }}" {% if location == selected_location %}selected{% endif %}>{{ location }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+    {% if selected_location %}<a href="/">Clear</a>{% endif %}
+  </form>
+  {% if jobs %}
+    <div class="job-grid">
+      {% for job in jobs %}
+        <article class="job-card">
+          <div>
+            <h2>{{ job.job_title }}</h2>
+            <p>{{ job.employer_name or "Unknown employer" }}</p>
+            <p>{{ job.city_location or "Location unavailable" }}</p>
+            <p>Posted: {{ job.posted_at.strftime("%Y-%m-%d") if job.posted_at else "Unavailable" }}</p>
+          </div>
+          <div class="badges">
+            <span>{{ job.status }}</span>
+            {% if job.is_favorite %}<span>Favorite</span>{% endif %}
+            {% if job.is_applied %}<span>Applied</span>{% endif %}
+          </div>
+          <div class="actions">
+            <a href="{{ job.job_url }}" target="_blank" rel="noreferrer">Open</a>
+            <a href="/jobs/{{ job.id }}">Details</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty">No jobs yet. Run ingestion or use manual import to add the first one.</p>
+  {% endif %}
+</section>
+{% endblock %}

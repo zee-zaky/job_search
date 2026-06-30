@@ -1,0 +1,16 @@
+sources:
+  - name: "SEEK AI Jobs NZ"
+    provider: "seek"
+    description: "SEEK AI and machine learning job listings for New Zealand"
+    enabled: true
+    ingestion_mode: "html_scraper"
+    search_url: "https://nz.seek.com/artificial-intelligence-jobs-in-information-communication-technology?sortmode=ListedDate"
+    schedule_minutes: 60
+
+  - name: "Manual SEEK Import"
+    provider: "seek"
+    description: "Paste individual SEEK job URLs for manual import"
+    enabled: true
+    ingestion_mode: "manual_import"
+    schedule_minutes: 60
+

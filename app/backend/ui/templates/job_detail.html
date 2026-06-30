@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="panel detail">
+  <a href="/">Back to jobs</a>
+  <h1>{{ job.job_title }}</h1>
+  <p>{{ job.employer_name or "Unknown employer" }}</p>
+  <dl>
+    <dt>Location</dt><dd>{{ job.city_location or "Unavailable" }}</dd>
+    <dt>Employment type</dt><dd>{{ job.employment_type or "Unavailable" }}</dd>
+    <dt>Salary</dt><dd>{{ job.salary_range or "Unavailable" }}</dd>
+    <dt>Status</dt><dd>{{ job.status }}</dd>
+    <dt>Posted</dt><dd>{{ job.posted_at.strftime("%Y-%m-%d") if job.posted_at else "Unavailable" }}</dd>
+    <dt>First seen</dt><dd>{{ job.first_seen_at }}</dd>
+    <dt>Last seen</dt><dd>{{ job.last_seen_at }}</dd>
+  </dl>
+  <div class="actions">
+    <form method="post" action="/jobs/{{ job.id }}/mark-applied"><button>Mark applied</button></form>
+    <form method="post" action="/jobs/{{ job.id }}/archive"><button>Archive</button></form>
+    <a href="{{ job.job_url }}" target="_blank" rel="noreferrer">Open original</a>
+  </div>
+  <section>
+    <h2>Description</h2>
+    <div class="job-description">
+      {% if job.description %}
+        {{ job.description | safe }}
+      {% else %}
+        No description parsed yet.
+      {% endif %}
+    </div>
+  </section>
+  <form method="post" action="/jobs/{{ job.id }}/comments" class="comments">
+    <label for="user_comments">Comments</label>
+    <textarea id="user_comments" name="user_comments" rows="5">{{ job.user_comments or "" }}</textarea>
+    <button>Save comments</button>
+  </form>
+</article>
+{% endblock %}

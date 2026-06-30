@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h1>Manual Import</h1>
+  {% if result %}
+    <div class="notice">
+      Result: {{ result.action }} / {{ result.status }}
+      {% if result.job_id %}<a href="/jobs/{{ result.job_id }}">Open imported job</a>{% endif %}
+      {% if result.errors %}<p>{{ result.errors }}</p>{% endif %}
+    </div>
+  {% endif %}
+  <form method="post" action="/import" class="stack">
+    <label for="source_id">Source</label>
+    <select id="source_id" name="source_id">
+      {% for source in sources %}
+        <option value="{{ source.id }}">{{ source.name }} ({{ source.provider }})</option>
+      {% endfor %}
+    </select>
+    <label for="provider">Provider</label>
+    <input id="provider" name="provider" value="{{ sources[0].provider if sources else 'seek' }}">
+    <label for="job_url">Job URL</label>
+    <input id="job_url" name="job_url" type="url" required>
+    <button>Import Job</button>
+  </form>
+</section>
+{% endblock %}
