@@ -1,0 +1,106 @@
+Muhammad Zaky
+Auckland | +642 1111 6541| muhammad.zaky@yahoo.com |  LinkedIn Profile
+Profile Summary
+Senior integration technology professional with nearly two decades of experience helping enterprise clients modernise platforms, solve complex integration challenges, and transform their IT capabilities to meet business objectives and adopt new platforms at scale, particularly around IBM middleware and hybrid integration technologies. I have delivered scalable technology outcomes across banking, government, telecom, and retail sectors, with a strong background in integration architecture, middleware solutions, API-led and event-driven integration, platform modernisation, and client-facing solution delivery.
+Specialises in client needs analysis, technical discovery, solution shaping, and integration advisory, working closely with clients, executive managers, architects, engineers, developers, testers, operational teams, and delivery stakeholders to translate business challenges into scalable, secure, and practical integration solutions. Strong background supporting enterprise platforms, API management, middleware, messaging, B2B integration, Kafka-based solutions, CRM solutions, cloud environments, and large-scale platform migration initiatives.
+Experienced across the full solution lifecycle, including discovery, requirements analysis, solution architecture, technical pre-sales support, detailed design, implementation support, risk management, performance benchmarking, troubleshooting, and continuous improvement. Skilled in identifying client pain points, analysing current-state integration landscapes, defining solution options, and communicating the value of integration technologies in business-relevant terms and clear business outcomes.
+I have delivered enterprise integration solutions across New Zealand, Australia, Saudi Arabia, Egypt, and Latin America for major organisations, including Westpac Bank, the Ministry of Social Development, The Warehouse Group, Transport for NSW Roads & Maritime Services, IBM, Bancolombia, CIB Bank, National Bank of Egypt, Alinma Bank, Alinma Investment Company, Ersal Global Remittances, and Mobily.
+More recently, I completed a Master of Business Management in Strategic Management and a Master of Artificial Intelligence. My business studies were motivated by an interest in extending my career from technical delivery into business advisory, account management, and technology solution sales. The programme strengthened my capability in strategic management, contemporary marketing, financial decision-making, business analytics, innovation, global management, consultancy practice, stakeholder engagement, and business-focused problem-solving.
+As part of the programme, I completed a consultancy capstone project with a New Zealand sustainable footwear brand, providing strategic business recommendations to the executive team to improve sales, market share, customer growth, and competitive positioning. The project was highly appreciated by both the client and the university and reinforced my ability to combine structured business analysis, market understanding, strategic recommendations, and practical execution.
+This combination of enterprise integration expertise, client-facing delivery experience, and recent business and AI study supports my ability to engage clients on both technology value and business outcomes, helping organisations shape resilient integration solutions, progress opportunities, and achieve measurable transformation results.
+Integration Technology Advisory & Solution Pre-Sales Support:
+Supporting client conversations to identify integration challenges, business drivers, and modernisation opportunities
+Translating complex API, middleware, messaging, B2B, and event-driven integration capabilities into business value
+Shaping tailored solution options aligned with client needs, technical constraints, risk, and delivery feasibility
+Supporting technical pre-sales, solution positioning, and opportunity progression through architecture and delivery credibility
+Stakeholder Engagement & Relationship Building:
+Working closely with executive managers, business stakeholders, architects, developers, testers, operations teams, vendors, and delivery teams
+Building trust through strong technical credibility, practical advice, and clear communication of complex concepts
+Aligning business, sales, technical, and delivery stakeholders around shared solution outcomes
+Supporting cross-functional collaboration to ensure proposed solutions are realistic, valuable, and implementable
+Client Needs Analysis & Technical Discovery:
+Facilitating discovery discussions to understand current-state platforms, integration pain points, operational challenges, and business objectives
+Analysing business and system requirements across enterprise integration, API, messaging, CRM, and cloud-enabled environments
+Identifying gaps, dependencies, risks, and improvement opportunities across integration landscapes
+Translating client requirements into clear solution recommendations, technical options, and implementation considerations
+Integration Architecture & Platform Modernisation:
+Designing scalable, secure, and maintainable integration solutions using SOA, EDA, APIs, middleware, messaging, and event streaming patterns
+Supporting migration and modernisation of mission-critical integration platforms and enterprise service bus environments
+Experience across IBM integration technologies, IBM MQ, IBM Integration Bus, App Connect Enterprise, IBM Business Process Management, DataPower, and related enterprise integration tools, including Kafka.
+Defining integration patterns, governance approaches, performance considerations, and reusable solution components
+Education, Certifications, Languages and Skills summary
+Education:
+(2026) Master of Artificial Intelligence, University of Auckland (First Class Honours).
+(2025) Master of Business Management, Strategic Management, University of Auckland (Distinction).
+Honours: Beta Gamma Sigma, International Business Honour Society.
+(2006) B.Sc., Computer Engineering and Automatic Control, Alexandria University (Distinction)
+Certifications:
+TOGAF 9 Certified, The Open Group | ITIL Foundation | Project Management Professional (PMP)
+AWS Certified Cloud Practitioner | IBM Certified Solution Implementer WebSphere DataPower SOA Appliances
+MCD - MuleSoft Certified Developer (Mule 4) | IBM Certified Solution Designer WebSphere MQ V7.0
+Languages:
+English and Arabic (Proficient / Native) | French (Basic)
+Middleware and Enterprise Application Integration: (15+ years):
+IBM WMB / IIB/ ACE, WMQ, MQ Appliances | IBM WebSphere DataPower SOA Appliances
+IBM Business Process Manager |Apache Kafka | Confluent | Azure Event Hubs
+WSDL | SWAGGER | RAML | YAML standards for web services and REST API design
+ESQL| Java | JavaScript | XSLT | DFDL | and graphical tools for message transformation
+JSON | XML | XPath | XSLT | SOAP | OFSML | ISO8583 | and other message formats
+Database and Data Tools:
+IBM DB2 | Microsoft SQL Server | SQL | Oracle SQL queries | MySQL
+Programming Languages & CRM:
+Python | Java | NodeJs | JavaScript | Visual C++ | MS D365 | Power Platform(PowerApps & Power Automate)
+Cloud, DevOps, Observability and Version Control Systems:
+AWS | Microsoft Azure | IBM Cloud Private (ICP) | OpenShift | Docker | Kubernetes | Helm | Bitbucket | GIT
+Jenkins | Azure DevOps | Dynatrace | Splunk | IBM Rational ClearCase | SVN | Microsoft Visual SourceSafe
+AI/ML Domains:
+Natural Language Processing | Computer Vision | Agentic AI | Transformers | LLM Fine-Tuning
+Prompt Engineering | Context Engineering | Retrieval-Augmented Generation | Vibe Coding | Model Evaluation
+Multi-Agent Orchestration | Agent Skills | Agent Harness Design | Human-In-The-Loop Workflows
+Tools:
+Visio | Miro | Draw.io | Jira | Confluence | Microsoft Project | Azure | AWS | Sparx EA
+Process Mapping | BPMN modelling | API integrations | Service Design
+Career Summary
+Postgraduate Studies, Research and Publications | The University of Auckland | February 2024 – May 2026.
+Senior Integration Consultant | Westpac Bank | April – December 2023.
+Senior Integration Consultant /Architect | Ministry of Social Development | May– December 2022.
+Integration Architect | The Warehouse Group (TWG) | September – December 2022.
+Senior Integration / Software Engineer | Westpac Bank | October – December 2023.
+Senior Integration Consultant Contracts | The Warehouse Group (TWG) / Tasaud | July 2019 – Sept 2020
+Integration Consultant | Transport NSW Roads and Maritime Services | July 2018 – July 2019.
+Senior Integration Specialist / IT Advisor | Alinma Bank | January 2012 – January 2018.
+Software Engineer | IBM | August 2010 – August 2010.
+Software Engineer | Ejada Systems| September 2008 – August 2010.
+Software Engineer | GPSExperts | June 2006 – September 2008.
+Some Key Roles and Projects
+Integration Architect @ The Warehouse Group
+As Integration Architect on The Warehouse Group’s ERP Finance and Inventory programme, I worked across Oracle Cloud products including Oracle Fusion ERP, RMFCS, OCI, and OIC, alongside key TWG enterprise systems such as TUI, PRISM, MDM, Enfinity, and the Data Warehouse. The role required strong client needs analysis, technical discovery, and solution shaping to support integration decisions across a complex multi-platform retail environment involving finance, inventory, master data, banking, and operational systems.
+I collaborated closely with business stakeholders, enterprise and solution architects, testing teams, middleware specialists, and multi-vendor delivery teams across New Zealand, Australia, the Philippines, and India to address architectural misalignment, resolve design gaps, and improve visibility over programme deliverables. This included evaluating integration design options, facilitating practical compromises between stakeholders, and helping align internal systems, MDM, retail applications, Oracle Cloud services, and external integration with HSBC Bank.
+I also introduced improvements to development and testing hand-off engineering practices, strengthened quality standards, and helped create a more transparent and collaborative delivery environment. By keeping stakeholders informed, presenting information in ways suited to different audiences, and helping resolve technical and communication blockers, I contributed to reducing project risk, improving delivery confidence, and supporting scalable, secure, and business-aligned integration outcomes.
+Senior Integration Consultant /Architect  @ The Ministry of Social Development
+As Senior Integration Consultant / Architect at the Ministry of Social Development, I supported major government initiatives and legislative change programmes through technical and business analysis, requirements definition, solution design, and delivery of integration services across internal and external systems. I designed and developed REST and SOAP web services using IBM Integration Bus 10, IBM MQ 9, Jenkins, and Sparx Enterprise Architect, supporting initiatives such as RecruitMe Decommissioning, Child Support Pass-On, New Correspondence Platform, Change of Income for Families, and hardship-related service changes.
+I worked closely with business stakeholders, enterprise architects, solution architects, developers, testers, and operational teams to understand business objectives, analyse process impacts, identify integration dependencies, and define practical solution options. This included facilitating discovery and requirements sessions, documenting functional requirements, API specifications, business rules, acceptance criteria, data flows, and interface behaviours, while ensuring proposed integration solutions aligned with operational needs, legislative requirements, and technology standards.
+I also contributed to cloud migration planning by collaborating with architecture teams to define integration considerations for MSD’s future-state platform roadmap. Working within Agile/Scrum delivery teams, I supported backlog refinement, sprint planning, implementation activities, testing support, defect investigation, interface validation, and continuous improvement. This role strengthened my ability to combine client needs analysis, integration advisory, IBM middleware expertise, stakeholder engagement, and delivery discipline to support secure, resilient, and business-aligned technology outcomes in a regulated government environment.
+Senior Integration Consultant / Software Engineer @ Westpac
+At Westpac Bank, I worked on major enterprise integration modernisation initiatives involving the upgrade of middleware services from legacy WebSphere Message Broker and IBM Integration Bus platforms to IBM App Connect Enterprise 12. These programmes involved IBM MQ, MQ appliances, Docker, Kubernetes, Helm, and containerised deployment patterns, supporting a more scalable, resilient, and maintainable integration architecture within a highly regulated banking environment.
+My role covered technical analysis, solution design, development, migration support, performance tuning, monitoring, troubleshooting, and implementation support across mission-critical banking services. I analysed and developed code to translate more than 1,500 legacy message flow maps into ESQL for containerised ACE integration flows, while supporting streamlined deployment through Helm and helping maintain continuity of legacy services during and after migration.
+I also designed, developed, and supported CRM and integration solutions using Microsoft Dynamics 365 and Power Platform, including KYC, customer interaction, complaints management, CCCFA compliance changes, and AML-related data integration. This experience strengthened my ability to work with business, compliance, operations, architecture, and delivery stakeholders to understand client needs, define practical solution options, manage risk, and deliver secure, business-aligned technology outcomes in financial services.
+Senior Integration Consultant @ Transport NSW Roads and Maritime Services
+Analysed, designed and developed multiple integration solutions for major state projects which are part of the digital government agenda to introduce DDL-Digital Driver’s Licence and automation of Medical Records Reviews. The projects have an internal scope to build integration services on top of DRIVES (the core system which holds the licences and registration information) as well as other internal systems.
+In addition, an external integration scope to build APIs that allow other government agencies (Service NSW and NSW Police Forces) to consume the services and perform actions such as inquiring, suspending or confiscating DDLs.
+I have automated the build of new integration services, Jenkins configuration and Splunk dashboards from a skeleton template, which reduced the development time by 50% and review time by 80%, improving the consistent use of coding best practices. Worked in agile projects using SCRUM methodology of two-week sprints and daily stand-up meetings.
+► Projects:
+NSW Digital Driver’s Licence
+Tolling Relief
+Online Licence Renewal for Concession Card Holders
+Driver’s Knowledge Test Re-platform
+Driver’s Medical Records Automation
+Cloud Transformation Project
+Senior Integration Specialist/IT Advisor @ Alinma Bank
+At Alinma Bank, I participated in multiple enterprise integration initiatives of varying scale and complexity, supporting banking transformation across payments, payroll, remittances, AML, core banking integration, government connectivity, and B2B partner integration. My role involved technical and business analysis, integration architecture design, solution implementation, stakeholder engagement, and delivery support across mission-critical banking systems in a highly regulated financial services environment.
+I designed Alinma Bank’s first BPM-based integration solution, introducing a new capability within the integration layer to process complex bulk transactions such as payroll, bulk payments, dividends, bulk account opening, and bulk card management. The solution orchestrated multiple systems, integration services, human tasks, business rules, and escalation paths, improving process efficiency, reducing human error, avoiding duplicate transactions, and supporting stronger customer outcomes. The business impact was significant: the solution reduced manual handling, improved process control, minimised duplicate transactions and human errors, gave corporate clients better visibility, and enabled high-volume bulk processing without overloading the integration layer. The capability later supported other bulk processes, including bulk payments, dividends, bulk account opening, and card management.
+I also worked closely with the financial applications unit on secure B2B integration initiatives connecting the bank with correspondent banks, ministries, government departments, and external business partners. Key projects included Alinma Payroll Management System, Alinma B2B Gateway, Emergency Cash, Ersal Global Remittance, Anti-Money Laundering integration, Ministry of Commerce and Industry integration, TCR device integration with T24 Core Banking, Dormant and Unclaimed Accounts, and reusable integration framework components that the bank continued to use. This experience strengthened my capability in client needs analysis, integration advisory, secure partner connectivity, reusable solution design, and business-aligned technology delivery.
+Software Engineer @ IBM
+At IBM Global Delivery Centre, I analysed, designed, developed, and supported middleware and enterprise integration solutions for banking-sector clients across Latin America and the Middle East. My work involved integration services design and development for the Bancolombia Bank Enterprise Service Bus programme, middleware solution architecture for the Commercial International Bank IVR integration project, and integration pre-sales support for the National Bank of Egypt.
+This role allowed me to work closely with sales and provide technical presales support to help close a deal with National Bank of Egypt. I worked across both technical delivery and client-facing and proof of concept development, middleware solution positioning, and collaboration with architecture and delivery teams. One example involved demonstrating, through a proof of concept, how IBM middleware could address a client issue involving AS/400 mainframe unavailability and help avoid transaction-processing bottlenecks.
+The experience gave me early exposure to how IBM integration technologies can be positioned to solve real client problems, reduce operational risk, and support resilient transaction processing. It is directly relevant to integration technology sales because it demonstrates my ability to understand a business and technical challenge, shape a practical middleware solution, prove the value through a working demonstration, and support client confidence in IBM technology capability.

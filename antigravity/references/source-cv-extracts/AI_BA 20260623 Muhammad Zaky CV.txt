@@ -1,0 +1,116 @@
+Muhammad Zaky | Senior Business Analyst
+Auckland | +642 1111 6541| muhammad.zaky@yahoo.com |  LinkedIn Profile
+Profile Summary
+Senior Business Analyst with over 18 years of experience facilitating human-centred discovery, delivering large-scale and complex technology solutions and helping clients in banking, government, telecom, and retail sectors transform their IT capabilities to meet their business challenges and adopt new platforms at scale.
+Specialises in design thinking, stakeholder engagement, and technical analysis, working closely with architects, engineers, developers, testers and operational teams to translate business needs into scalable platform solutions. Strong background supporting enterprise platforms, integrations, CRM solutions, cloud environments, and data-driven initiatives. Experienced in analysing data using SQL, validating system behaviour, supporting Agile delivery teams, and ensuring solutions align with business and operational outcomes.
+More recently, I completed a Master of Business Management (Strategic Management) and a Master of Artificial Intelligence, combining senior business analysis experience with practical AI, automation and data-driven decision-making capability. Hands-on experience across natural language processing, transformer-based models, AI agents, retrieval-augmented generation, computer vision, model evaluation, Python experimentation and applied AI research projects.
+Skilled in leading cross-functional workshops, technical discovery sessions, and collaborative solution design activities with business and technical stakeholders to understand business objectives, align stakeholders’ expectations, analyse gaps, identify risks, analyse current-state processes, identify opportunities for improvement, and translate business needs into clear technical system requirements. Specialised in bridging the gap between engineering teams and operational stakeholders, ensuring technology solutions are secure, resilient, and aligned with real-world operational environments, supporting the successful delivery of large-scale transformation initiatives across New Zealand, Australia, Saudi Arabia, Egypt, and Latin America.
+Core Capabilities
+Human-Centred Discovery & Design Thinking:
+Facilitating discovery workshops to uncover operational challenges and user needs
+Applying design thinking techniques to explore solution options and prioritise improvements
+Translating frontline operational insights into implementable platform requirements
+Requirements analysis for complex platform environments, gap analysis, impact assessment, and solution evaluation
+Stakeholder Engagement & Facilitation:
+Leading multi-disciplinary workshops involving engineers, architects, security teams, and SMEs
+Aligning technology teams and operational stakeholders around shared solution outcomes
+Managing complex stakeholder environments across business, operational, and technical domains
+Collaboration with architects, developers, testers and delivery teams. Executive, SME and vendor engagement.
+Opportunity Discovery & Automation
+Identifying business processes suitable for automation and digital improvement
+Assessing opportunities based on business value, impact, feasibility, risk and implementation complexity
+Translating business pain points into automation use cases, business requirements and delivery recommendations
+Supporting prioritisation of automation initiatives using value-versus-feasibility analysis
+Bridging business teams and technical delivery teams across data, automation and platform initiatives
+Technical Business Analysis:
+SQL-based data analysis and validation
+Data quality investigations and root-cause analysis to avoid data discrimination
+Data extraction, analysis, and verification to support testing and delivery
+Integration and API analysis across enterprise systems
+Technical documentation supporting engineering delivery
+Education, Certifications, Languages and Skills summary
+Education:
+(2026) Master of Artificial Intelligence, University of Auckland (First Class Honours).
+(2025) Master of Business Management, Strategic Management, University of Auckland (Distinction).
+Honours: Beta Gamma Sigma, International Business Honour Society.
+(2006) B.Sc., Computer Engineering and Automatic Control, Alexandria University (Distinction)
+Certifications:
+TOGAF 9 Certified, The Open Group | ITIL Foundation | Project Management Professional (PMP)
+AWS Certified Cloud Practitioner | IBM Certified Solution Implementer WebSphere DataPower SOA Appliances
+MCD - MuleSoft Certified Developer (Mule 4) | IBM Certified Solution Designer WebSphere MQ V7.0
+Languages:
+English and Arabic (Proficient / Native) | French (Basic)
+Tools:
+Visio | Miro | Draw.io | Jira | Confluence | Microsoft Project | Azure | AWS | Sparx EA
+Process Mapping | BPMN modelling | API integrations | Service Design
+Database and Data Tools:
+Microsoft SQL Server | SQL | Oracle SQL queries | MySQL | DB2
+Programming Languages & CRM:
+Python | Java | NodeJs | JavaScript | Visual C++ | MS D365 | Power Platform(PowerApps & Power Automate)
+AI/ML Domains:
+Natural Language Processing | Computer Vision | Agentic AI | Transformers | LLM Fine-Tuning
+Prompt Engineering | Context Engineering | Retrieval-Augmented Generation | Vibe Coding | Model Evaluation
+Multi-Agent Orchestration | Agent Skills | Agent Harness Design | Human-In-The-Loop Workflows
+Career Summary
+Postgraduate Studies, Research and Publications | The University of Auckland | February 2024 – May 2026.
+Senior Technical Business Analyst / Integration Consultant | Westpac Bank | April – December 2023.
+Senior Business Analyst / Integration Consultant | Ministry of Social Development | May– December 2022.
+Integration Architect | The Warehouse Group (TWG) | September – December 2022.
+Senior Technical Business Analyst / Software Engineer | Westpac Bank | October – December 2023.
+Senior Integration Consultant Contracts | The Warehouse Group (TWG) / Tasaud | July 2019 – September 2020.
+Senior Integration Business Analyst / Consultant | Transport NSW Roads and Maritime Services | July 2018 – July 2019.
+Senior Business Analyst / IT Advisor | Alinma Bank | January 2012 – January 2018.
+Business Analyst / Software Engineer | IBM | August 2010 – August 2010.
+Business Analyst / Software Engineer | Ejada Systems| September 2008 – August 2010.
+Business Analyst / Software Engineer | GPSExperts | June 2006 – September 2008.
+Some Key Projects
+AI Research and Applied AI Projects @ The University of Auckland
+Completed applied AI research and project work across NLP, transformer-based models, retrieval-augmented generation, AI agents, computer vision, robotics and model evaluation, with a focus on practical use cases, data preparation, experimentation, benchmarking and measurable outcomes.
+Project examples:
+Legal Case Retrieval using AI-Generated Metadata: Designed a two-stage AI-assisted information retrieval approach where an LLM generated structured metadata such as legal issues, topics, facts, arguments, court analysis and outcomes. Used this metadata to improve retrieval and candidate selection, demonstrating how AI can convert unstructured text into structured decision-support information.
+COLIEE-2026 Legal Case Retrieval Competition: Developed metadata-aware sparse retrieval pipelines using Pyserini/Lucene BM25+RM3 and Milvus multi-field sparse retrieval, enhanced by structured AI-generated legal reasoning metadata. Achieved 5th place overall by team rank and published the work in ICAIL 2026.
+AI Agents, RAG and Workflow Automation: Built hands-on capability in AI agents, prompt engineering, context engineering, retrieval-augmented generation, agent evaluation, tool-use agents, and human-in-the-loop workflows as part of course projects.
+CaringCompanion Robot: Developed an emotion-aware conversational robot combining facial emotion/demographic recognition with LLM-driven dialogue, speech-to-text and text-to-speech. Demonstrated the use of AI to support personalised interaction, user engagement and workflow assistance.
+TurtleBot4 Autonomous Navigation: Implemented an autonomous robotics workflow using SLAM, LiDAR-based clearance analysis, reactive exploration, YOLOv8-based object detection and a custom A* return-home planner, achieving 90% mission success in cluttered indoor environments.
+Media Bias Detection and Reading Comprehension: Fine-tuned transformer-based NLP models including RoBERTa, DistilBERT, BERT, ALBERT and DeBERTa for classification, question answering and reasoning tasks. Applied model evaluation, benchmarking, hyperparameter tuning and error analysis to improve performance.
+Senior Business Analyst / CRM Solutions @ Westpac
+Supported the business analysis, design and delivery of customer-facing CRM solutions used by branch and front-desk staff, using Microsoft Dynamics 365 and Power Platform. Worked closely with business stakeholders, compliance teams, operations users and technical delivery teams to gather requirements, analyse processes, validate data flows and support implementation.
+Facilitated requirements discussions for Your Story, a KYC application used by branch staff to capture customer information, needs and service interactions during branch visits
+Analysed current-state and future-state CRM processes for customer onboarding, complaints management and customer interaction tracking
+Documented functional requirements, business rules, user stories and acceptance criteria for CRM enhancements and regulatory change initiatives
+Supported modifications to CRM and related systems to comply with the Credit Contracts and Consumer Finance Act (CCCFA) requirements
+Analysed customer, compliance and interaction data to support validation, reporting and operational decision-making
+Defined and validated data integration requirements between CRM, banking and compliance systems for Anti-Money Laundering (AML) purposes
+Worked with developers, testers, vendors, and business SMEs to support testing, defect triage, data validation and successful production implementation.
+Role: Technical Business Analysis / Government Transformation @ MSD
+Supported major government initiatives and legislative change programmes through technical/business analysis, requirements definition, solution design and delivery of integration services across internal and external systems.
+Worked across multiple initiatives, including Changes to Income Screens, Child Support Pass-On, RecruitMe Decommissioning and Hardship / Emergency Dental changes
+Facilitated discovery and requirements sessions with business stakeholders, architects, developers, testers and operational teams
+Analysed business processes, system impacts, integration dependencies and data flows for legislative and operational change initiatives
+Documented functional requirements, specifications, API requirements, business rules and acceptance criteria
+Designed and supported REST and SOAP web services
+Supported data analysis, interface validation, defect investigation and testing activities across integrated government systems
+Worked in Agile/Scrum delivery teams, supporting backlog refinement, sprint planning, daily stand-ups and implementation activities
+Role: Technical Business Analysis / Digital Government Transformation @ NSW RMS
+Analysed, designed and delivered integration and API solutions for major NSW Government digital transformation initiatives, including Digital Driver’s Licence, Online Licence Renewal, Tolling Relief, Driver Knowledge Test Re-platforming, Medical Records Review Automation, and cloud transformation.
+Worked across internal systems, including DRIVES, the core licensing and registration platform, and external government agency integrations supporting Service NSW and NSW Police Force.
+Facilitated requirements and technical discovery sessions with business stakeholders, government agencies, architects, developers, testers and operational teams
+Analysed current-state and future-state business processes for digital licensing, licence renewal, tolling relief and medical review workflows
+Documented business requirements, functional specifications, API requirements, data flows, business rules and acceptance criteria
+Defined and validated integration requirements across DRIVES and related internal systems, ensuring accurate exchange of licence, registration and customer data
+Supported external API requirements enabling authorised agencies to inquire, suspend, confiscate or validate Digital Driver’s Licences
+Performed impact analysis across business processes, system interfaces, data dependencies and downstream consumers
+Supported data validation, testing, defect triage and implementation activities across Agile delivery teams
+Worked in Scrum delivery teams using two-week sprints, daily stand-ups, backlog refinement, sprint planning and delivery reviews
+Role: Technical Business Analysis / Payroll Management System @ Alinma Bank
+Analysis, design and implementation support for Alinma Payroll Management System, the bank’s first BPM-based solution, replacing a highly manual payroll processing model with an automated self-service capability for corporate banking clients.
+Facilitated multiple workshops, requirements-gathering sessions and validation playbacks with key stakeholders across central operations, corporate online banking, business users, technology teams and integration teams. Analysed the existing payroll operating model, identified process bottlenecks and manual control points, and defined the future-state automated process enabling clients to submit and manage payroll files directly through the online banking portal.
+Documented business requirements, process flows, integration requirements, business rules, exception scenarios, escalation paths and validation criteria. The solution orchestrated multiple systems, integration services, human workflow tasks, business rules and approval processes to support high-volume bulk transactions including payroll, bulk payments, dividends, bulk account opening and bulk card management.
+The implementation enriched the bank’s integration layer with a reusable BPM capability for processing bulk transactions efficiently without overloading the network with in-flight messages. It improved operational efficiency, reduced manual handling, minimised duplicate transactions and human errors, and contributed to stronger customer satisfaction and recognition of Alinma Bank’s payroll service capability
+Facilitated stakeholder workshops and requirements sessions with operations, corporate banking, online banking, business SMEs and technology teams
+Analysed current-state manual payroll processes and designed future-state automated workflows
+Defined functional requirements, business rules, data flows, exception handling, approval steps and escalation processes
+Supported validation playbacks to confirm business requirements, process logic and solution behaviour with stakeholders
+Designed BPM-based orchestration across integration services, human tasks, system tasks and business rules
+Supported bulk transaction processing capabilities for payroll, payments, dividends, account opening and card management
+Worked with integration, application and infrastructure teams to align BPM processes with enterprise integration services

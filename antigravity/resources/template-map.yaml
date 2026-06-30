@@ -1,0 +1,20 @@
+templates:
+  Integration:
+    docx: antigravity/templates/docx/integration-template.docx
+    primary_reference: antigravity/references/category-guides/integration.md
+  AI:
+    docx: antigravity/templates/docx/ai-ba-template.docx
+    primary_reference: antigravity/references/category-guides/ai.md
+  BA:
+    docx: antigravity/templates/docx/ba-template.docx
+    primary_reference: antigravity/references/category-guides/ba.md
+  Sales:
+    docx: antigravity/templates/docx/integration-sales-template.docx
+    primary_reference: antigravity/references/category-guides/sales.md
+  Dynamics 365:
+    docx: antigravity/templates/docx/ba-template.docx
+    primary_reference: antigravity/references/category-guides/dynamics-365.md
+fallback:
+  docx: antigravity/templates/docx/ba-template.docx
+  primary_reference: antigravity/references/cv-format-and-faithfulness.md
+

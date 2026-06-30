@@ -1,0 +1,12 @@
+base_generated_folder: "/mnt/d/OneDrive/Work Related/Career Related/CV/Generated"
+employer_folder: "{employer_name}"
+job_folder: "{yyyymmdd} - {job_title}"
+files:
+  cv_docx: "Muhammad Zaky - {job_title} - CV.docx"
+  cover_letter_docx: "Muhammad Zaky - {job_title} - Cover Letter.docx"
+  cv_pdf: "Muhammad Zaky - {job_title} - CV.pdf"
+  cover_letter_pdf: "Muhammad Zaky - {job_title} - Cover Letter.pdf"
+database:
+  generated_status: "cv_generated"
+  generated_cv_path_field: "generated_cv_path"
+

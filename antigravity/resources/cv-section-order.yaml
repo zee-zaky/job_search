@@ -1,0 +1,23 @@
+sections:
+  - name: Header
+    required: true
+    notes: Keep candidate name, Auckland location, phone, email, and LinkedIn line from source CVs.
+  - name: Professional Summary
+    required: true
+    target_length: One formatted first page.
+    notes: Tailor title and 4-7 concise paragraphs to the job category and advert.
+  - name: Core Capabilities
+    required: true
+    target_groups: 3-4
+    target_items_per_group: 3-4
+    notes: Use category-specific capability groups; avoid generic filler.
+  - name: Education, Certifications, Languages and Skills summary
+    required: true
+    notes: Preserve verified education, certifications, languages, and relevant skills.
+  - name: Career Summary
+    required: true
+    notes: Adjust role labels only when faithful to similar duties or projects.
+  - name: Some Key Roles and Projects
+    required: true
+    notes: Select examples that best match the job advert and provide concrete evidence.
+

@@ -1,0 +1,96 @@
+categories:
+  Integration:
+    title_keywords:
+      - integration
+      - solution architect
+      - integration architect
+      - middleware
+      - api
+      - platform engineer
+    description_keywords:
+      - IBM MQ
+      - IIB
+      - ACE
+      - App Connect
+      - DataPower
+      - Kafka
+      - event-driven
+      - API-led
+      - SOAP
+      - REST
+      - middleware
+      - enterprise service bus
+  AI:
+    title_keywords:
+      - AI
+      - artificial intelligence
+      - machine learning
+      - data scientist
+      - AI engineer
+      - automation
+    description_keywords:
+      - LLM
+      - RAG
+      - retrieval augmented generation
+      - NLP
+      - computer vision
+      - transformer
+      - model evaluation
+      - prompt engineering
+      - agent
+      - Python
+  BA:
+    title_keywords:
+      - business analyst
+      - technical business analyst
+      - senior business analyst
+      - product owner
+      - product manager
+    description_keywords:
+      - requirements
+      - stakeholder
+      - workshops
+      - process mapping
+      - user stories
+      - acceptance criteria
+      - BPMN
+      - discovery
+      - current state
+      - future state
+  Sales:
+    title_keywords:
+      - sales
+      - account
+      - pre-sales
+      - solution sales
+      - brand sales
+      - customer success
+    description_keywords:
+      - client relationship
+      - pipeline
+      - opportunity
+      - value proposition
+      - go-to-market
+      - discovery
+      - solution positioning
+      - executive stakeholder
+      - commercial
+  Dynamics 365:
+    title_keywords:
+      - dynamics 365
+      - d365
+      - crm
+      - power platform
+      - powerapps
+      - power automate
+    description_keywords:
+      - Microsoft Dynamics
+      - Dynamics 365
+      - D365
+      - CRM
+      - Power Platform
+      - PowerApps
+      - Power Automate
+      - customer onboarding
+      - KYC
+

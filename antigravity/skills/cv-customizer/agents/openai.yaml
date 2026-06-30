@@ -1,0 +1,4 @@
+interface:
+  display_name: "CV Customizer"
+  short_description: "Generate faithful tailored CV and cover letter packages from starred jobs."
+  default_prompt: "Check starred jobs, classify each role, generate a faithful tailored CV and cover letter, export both to PDF, and mark the job as cv_generated."
