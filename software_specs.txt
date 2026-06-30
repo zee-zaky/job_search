@@ -1,0 +1,772 @@
+# Job Search Tracker Application — Product and Engineering Specification
+
+## 1. Goal
+
+Build a local job-search tracking application that periodically ingests jobs by directly scraping data from preconfigured job-search URLs, stores normalized job records in a local database, and provides a user interface for browsing, searching, commenting, favoriting, and marking jobs as applied.
+
+The system must be modular so new job-source parsers can be added cleanly, for example SEEK, LinkedIn, Indeed, company career pages, or other job listing websites.
+
+The implementation must follow maintainable engineering practices: clear boundaries, typed models, idempotent ingestion, database migrations, testable parser contracts, structured logging, and robust scraping logic.
+
+---
+
+## 2. Important Compliance Requirement
+
+The application must respect robots.txt, avoid bypassing CAPTCHA, login protections, paywalls, or rate limits.
+
+Each source adapter must declare one of the following ingestion modes:
+
+1. `html_scraper`
+2. `manual_import`
+3. `disabled`
+
+All ingestion must be performed by directly scraping publicly accessible HTML pages from the configured URLs.
+
+The system must not rely on official APIs. All job data must be extracted from HTML responses using parsers.
+
+---
+
+## 3. Core Features
+
+### 3.1 Job Source Configuration
+
+The user can define one or more job search sources.
+
+Each source contains:
+
+```yaml
+sources:
+  - name: "SEEK AI Jobs NZ"
+    provider: "seek"
+    enabled: true
+    ingestion_mode: "html_scraper"
+    search_url: "https://nz.seek.com/artificial-intelligence-jobs-in-information-communication-technology?sortmode=ListedDate"
+    schedule_minutes: 60
+
+  - name: "SEEK ICT Jobs NZ"
+    provider: "seek"
+    enabled: true
+    ingestion_mode: "html_scraper"
+    search_url: "https://nz.seek.com/jobs-in-information-communication-technology"
+    schedule_minutes: 60
+```
+
+The backend must load sources from a configuration file or database table.
+
+Minimum source fields:
+
+| Field              | Type        | Required | Description                                    |
+| ------------------ | ----------- | -------- | ---------------------------------------------- |
+| `id`               | UUID/string | Yes      | Internal source identifier                     |
+| `name`             | string      | Yes      | Human-readable source name                     |
+| `provider`         | string      | Yes      | Parser/provider key                            |
+| `enabled`          | boolean     | Yes      | Whether scheduled ingestion runs               |
+| `ingestion_mode`   | enum        | Yes      | `html_scraper`, `manual_import`, or `disabled` |
+| `search_url`       | string      | Yes      | Preconfigured search URL                       |
+| `schedule_minutes` | integer     | No       | Source-specific polling interval               |
+| `last_run_at`      | datetime    | No       | Last ingestion attempt                         |
+| `last_success_at`  | datetime    | No       | Last successful ingestion                      |
+| `created_at`       | datetime    | Yes      | Creation timestamp                             |
+| `updated_at`       | datetime    | Yes      | Update timestamp                               |
+
+---
+
+## 4. Parsed Job Fields
+
+Each job must be normalized into the following canonical fields:
+
+| Field             | Type          | Required | Notes                                                  |
+| ----------------- | ------------- | -------- | ------------------------------------------------------ |
+| `id`              | UUID/string   | Yes      | Internal DB primary key                                |
+| `source_id`       | string        | Yes      | Source that discovered the job                         |
+| `provider`        | string        | Yes      | e.g. `seek`, `linkedin`                                |
+| `job_url`         | string        | Yes      | Canonical job URL                                      |
+| `external_job_id` | string/null   | No       | Provider-specific job ID if available                  |
+| `city_location`   | string/null   | No       | City, region, remote, hybrid, etc.                     |
+| `job_title`       | string        | Yes      | Job title                                              |
+| `employer_name`   | string/null   | No       | Employer or advertiser                                 |
+| `employment_type` | string/null   | No       | Full-time, part-time, contract, casual, etc.           |
+| `salary_range`    | string/null   | No       | Raw salary text if available                           |
+| `description`     | text/null     | No       | Full job description                                   |
+| `posted_at`       | datetime/null | No       | Posted/listed date if available                        |
+| `first_seen_at`   | datetime      | Yes      | First time the app saw the job                         |
+| `last_seen_at`    | datetime      | Yes      | Last ingestion run where job appeared                  |
+| `content_hash`    | string/null   | No       | Hash of normalized title/employer/location/description |
+| `raw_payload`     | JSON/null     | No       | Raw structured extraction result for debugging         |
+
+User-managed fields:
+
+| Field           | Type          | Default | Description                                                 |
+| --------------- | ------------- | ------- | ----------------------------------------------------------- |
+| `is_applied`    | boolean       | false   | User marked as applied                                      |
+| `applied_at`    | datetime/null | null    | When marked applied                                         |
+| `is_favorite`   | boolean       | false   | User favorited the job                                      |
+| `user_comments` | text/null     | null    | Free-text notes                                             |
+| `status`        | enum          | `new`   | `new`, `viewed`, `applied`, `rejected`, `archived`, `stale` |
+
+---
+
+## 5. Database Design
+
+Use a local database. Recommended default: SQLite for single-user local deployment. Use PostgreSQL-compatible schema conventions so the app can migrate later.
+
+Recommended ORM: SQLAlchemy or equivalent.
+
+### 5.1 Tables
+
+#### `job_sources`
+
+```sql
+CREATE TABLE job_sources (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    provider TEXT NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    ingestion_mode TEXT NOT NULL,
+    search_url TEXT NOT NULL,
+    schedule_minutes INTEGER DEFAULT 60,
+    last_run_at DATETIME,
+    last_success_at DATETIME,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
+);
+```
+
+#### `jobs`
+
+```sql
+CREATE TABLE jobs (
+    id TEXT PRIMARY KEY,
+    source_id TEXT NOT NULL,
+    provider TEXT NOT NULL,
+    job_url TEXT NOT NULL,
+    canonical_url TEXT NOT NULL,
+    external_job_id TEXT,
+    city_location TEXT,
+    job_title TEXT NOT NULL,
+    employer_name TEXT,
+    employment_type TEXT,
+    salary_range TEXT,
+    description TEXT,
+    posted_at DATETIME,
+    first_seen_at DATETIME NOT NULL,
+    last_seen_at DATETIME NOT NULL,
+    content_hash TEXT,
+    raw_payload JSON,
+    is_applied BOOLEAN NOT NULL DEFAULT FALSE,
+    applied_at DATETIME,
+    is_favorite BOOLEAN NOT NULL DEFAULT FALSE,
+    user_comments TEXT,
+    status TEXT NOT NULL DEFAULT 'new',
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    FOREIGN KEY (source_id) REFERENCES job_sources(id)
+);
+```
+
+#### Unique constraints
+
+```sql
+CREATE UNIQUE INDEX idx_jobs_provider_canonical_url
+ON jobs(provider, canonical_url);
+```
+
+Optional secondary unique constraint:
+
+```sql
+CREATE UNIQUE INDEX idx_jobs_provider_external_id
+ON jobs(provider, external_job_id)
+WHERE external_job_id IS NOT NULL;
+```
+
+### 5.2 Deduplication Rules
+
+Primary deduplication rule:
+
+```text
+provider + canonical_url
+```
+
+Canonical URL normalization must:
+
+1. Lowercase scheme and host.
+2. Remove tracking query parameters such as `utm_*`, `tracking`, `ref`, `source`.
+3. Remove trailing slashes where safe.
+4. Preserve provider-specific job identifiers.
+5. Avoid destructive normalization that merges different jobs.
+
+When a job already exists:
+
+1. Update parsed fields if new data is better or changed.
+2. Update `last_seen_at`.
+3. Do not overwrite user fields:
+
+   * `is_applied`
+   * `applied_at`
+   * `is_favorite`
+   * `user_comments`
+   * `status`, unless status is automatically changed from `new` to `stale` by a stale-job policy.
+
+---
+
+## 6. Architecture
+
+Use a layered architecture.
+
+```text
+app/
+  backend/
+    main.py
+    config/
+      settings.py
+      sources.yaml
+    db/
+      models.py
+      session.py
+      migrations/
+    ingestion/
+      scheduler.py
+      service.py
+      registry.py
+      fetcher.py
+      parsers/
+        base.py
+        seek.py
+        linkedin.py
+        manual_import.py
+    jobs/
+      repository.py
+      service.py
+      schemas.py
+      routes.py
+    ui/
+      static/
+      templates/
+    tests/
+      unit/
+      integration/
+```
+
+Recommended stack:
+
+```text
+Backend: Python 3.11+
+Web framework: FastAPI
+Database: SQLite initially
+ORM: SQLAlchemy
+Migrations: Alembic
+Scheduler: APScheduler or cron-compatible CLI
+HTML parsing: BeautifulSoup / selectolax
+HTTP client: httpx or requests
+Frontend: FastAPI templates, React, or Next.js
+```
+
+For a simpler local-first app, FastAPI plus server-rendered Jinja templates is acceptable.
+
+---
+
+## 7. Parser/Adapter Design
+
+### 7.1 Parser Interface
+
+Every provider parser must implement a common interface.
+
+```python
+class JobSourceParser(Protocol):
+    provider: str
+
+    def validate_source(self, source: JobSource) -> None:
+        """
+        Validate source URL and ensure it is suitable for scraping.
+        """
+
+    async def discover_job_links(self, source: JobSource) -> list[DiscoveredJob]:
+        """
+        Fetch the search URL HTML and extract job links and metadata.
+        """
+
+    async def parse_job_detail(self, discovered_job: DiscoveredJob) -> ParsedJob:
+        """
+        Fetch the job detail page HTML and extract normalized job fields.
+        """
+```
+
+### 7.2 Data Transfer Objects
+
+```python
+class DiscoveredJob(BaseModel):
+    provider: str
+    source_id: str
+    job_url: str
+    external_job_id: str | None = None
+    title_hint: str | None = None
+    employer_hint: str | None = None
+    location_hint: str | None = None
+    raw_payload: dict | None = None
+```
+
+```python
+class ParsedJob(BaseModel):
+    provider: str
+    source_id: str
+    job_url: str
+    canonical_url: str
+    external_job_id: str | None = None
+    city_location: str | None = None
+    job_title: str
+    employer_name: str | None = None
+    employment_type: str | None = None
+    salary_range: str | None = None
+    description: str | None = None
+    posted_at: datetime | None = None
+    raw_payload: dict | None = None
+```
+
+### 7.3 Parser Registry
+
+The backend must not directly import parser classes throughout the codebase. Use a registry.
+
+```python
+class ParserRegistry:
+    def register(self, parser: JobSourceParser) -> None:
+        ...
+
+    def get(self, provider: str) -> JobSourceParser:
+        ...
+```
+
+Adding a new source should require only:
+
+1. Creating a new parser file.
+2. Implementing the parser interface.
+3. Registering the parser.
+4. Adding source config.
+
+Example:
+
+```text
+ingestion/parsers/linkedin.py
+ingestion/parsers/seek.py
+ingestion/parsers/company_careers.py
+```
+
+---
+
+## 8. Ingestion Workflow
+
+### 8.1 Scheduled Ingestion
+
+The backend must support timer-based execution every 30 minutes or every hour.
+
+The scheduler must:
+
+1. Load enabled sources.
+2. Skip sources where `ingestion_mode = disabled`.
+3. Acquire a lock so only one ingestion run executes at a time.
+4. Run each source independently.
+5. Log success/failure per source.
+6. Continue processing other sources if one source fails.
+7. Write ingestion results to the database transactionally.
+
+Pseudo-flow:
+
+```text
+Start ingestion run
+  For each enabled source:
+    Validate source
+    Get parser from registry
+    Fetch search page HTML
+    Discover job links
+    For each discovered job:
+      Canonicalize URL
+      Check if job exists
+      If missing:
+        Fetch job detail HTML
+        Parse full job detail
+        Insert job
+      If existing:
+        Optionally refresh details
+        Update last_seen_at
+    Update source last_run_at and last_success_at
+End ingestion run
+```
+
+### 8.2 Manual Ingestion Trigger
+
+The UI must include a button:
+
+```text
+Update Jobs Now
+```
+
+When clicked:
+
+1. Call backend endpoint `POST /api/ingestion/run`.
+2. Start ingestion immediately.
+3. Prevent duplicate concurrent runs.
+4. Show current run status.
+5. Show number of new jobs, updated jobs, skipped jobs, and errors.
+
+### 8.3 Ingestion Run Summary
+
+Store or return:
+
+| Field                | Description                                       |
+| -------------------- | ------------------------------------------------- |
+| `run_id`             | Unique run ID                                     |
+| `started_at`         | Start timestamp                                   |
+| `finished_at`        | End timestamp                                     |
+| `status`             | `running`, `success`, `partial_failure`, `failed` |
+| `new_jobs_count`     | Number of inserted jobs                           |
+| `updated_jobs_count` | Number of existing jobs updated                   |
+| `skipped_jobs_count` | Number skipped                                    |
+| `error_count`        | Number of errors                                  |
+| `errors`             | Structured error messages                         |
+
+---
+
+## 9. Backend API
+
+### 9.1 Job APIs
+
+#### List jobs
+
+```http
+GET /api/jobs
+```
+
+Query parameters:
+
+```text
+q
+provider
+source_id
+city_location
+employment_type
+is_applied
+is_favorite
+status
+date_from
+date_to
+sort
+page
+page_size
+```
+
+Default sort:
+
+```text
+last_seen_at desc
+```
+
+#### Get one job
+
+```http
+GET /api/jobs/{job_id}
+```
+
+#### Update user fields
+
+```http
+PATCH /api/jobs/{job_id}
+```
+
+Allowed request body:
+
+```json
+{
+  "is_applied": true,
+  "is_favorite": true,
+  "user_comments": "Applied through company website.",
+  "status": "applied"
+}
+```
+
+Rules:
+
+1. If `is_applied` changes from false to true, set `applied_at`.
+2. If `is_applied` changes from true to false, clear `applied_at` unless the user explicitly keeps it.
+3. Do not allow client updates to immutable ingestion fields through this endpoint.
+
+#### Archive job
+
+```http
+POST /api/jobs/{job_id}/archive
+```
+
+#### Mark applied
+
+```http
+POST /api/jobs/{job_id}/mark-applied
+```
+
+#### Favorite/unfavorite
+
+```http
+POST /api/jobs/{job_id}/favorite
+DELETE /api/jobs/{job_id}/favorite
+```
+
+---
+
+### 9.2 Source APIs
+
+#### List sources
+
+```http
+GET /api/sources
+```
+
+#### Create source
+
+```http
+POST /api/sources
+```
+
+#### Update source
+
+```http
+PATCH /api/sources/{source_id}
+```
+
+#### Disable source
+
+```http
+POST /api/sources/{source_id}/disable
+```
+
+---
+
+### 9.3 Ingestion APIs
+
+#### Trigger ingestion
+
+```http
+POST /api/ingestion/run
+```
+
+Optional body:
+
+```json
+{
+  "source_id": "optional-specific-source-id"
+}
+```
+
+#### Get latest ingestion status
+
+```http
+GET /api/ingestion/status
+```
+
+#### Get ingestion history
+
+```http
+GET /api/ingestion/runs
+```
+
+---
+
+## 10. User Interface Requirements
+
+### 10.1 Main Jobs Page
+
+The UI must show a browsable jobs table/cards view.
+
+Each job card should display:
+
+```text
+Job Title
+Employer / Advertiser
+City / Location
+Employment Type
+Salary Range
+Source
+First Seen
+Last Seen
+Applied Badge
+Favorite Badge
+Open Job URL button
+Details button
+```
+
+Required filters:
+
+```text
+Search keyword
+Source/provider
+Location
+Employment type
+Applied / not applied
+Favorite only
+Status
+Date first seen
+Date last seen
+```
+
+Required sort options:
+
+```text
+Newest first
+Oldest first
+Recently seen
+Job title A-Z
+Employer A-Z
+Favorites first
+Unapplied first
+```
+
+### 10.2 Job Detail Page
+
+The detail page must show:
+
+```text
+Job title
+Employer / advertiser
+Location
+Employment type
+Salary range
+Full job description
+Original job URL
+Source
+First seen
+Last seen
+Posted date if available
+```
+
+User actions:
+
+```text
+Mark as applied
+Mark as not applied
+Favorite / unfavorite
+Add/edit comments
+Archive job
+Open original job URL
+```
+
+### 10.3 Manual Refresh
+
+The UI must include:
+
+```text
+Update Jobs Now
+```
+
+After clicking, show:
+
+```text
+Running...
+New jobs: X
+Updated jobs: Y
+Skipped jobs: Z
+Errors: N
+Last successful run: timestamp
+```
+
+### 10.4 Source Management Page
+
+The UI should allow the user to:
+
+1. View configured sources.
+2. Add a source.
+3. Edit source name, URL, provider, enabled flag, and schedule interval.
+4. Disable a source.
+5. View last successful ingestion time.
+6. View source-specific errors.
+
+---
+
+## 11. Job Status Lifecycle
+
+Default status:
+
+```text
+new
+```
+
+Allowed statuses:
+
+```text
+new
+viewed
+applied
+rejected
+archived
+stale
+```
+
+Rules:
+
+1. New jobs start as `new`.
+2. Opening a job detail page may optionally change `new` to `viewed`.
+3. Marking a job as applied sets status to `applied`.
+4. Archiving sets status to `archived`.
+5. A job may become `stale` if not seen for a configurable number of days, for example 14 days.
+6. User-set statuses should not be overwritten by ingestion except for safe metadata updates.
+
+---
+
+## 12. Error Handling
+
+The app must use structured errors.
+
+Examples:
+
+```json
+{
+  "error_code": "PARSER_NOT_FOUND",
+  "message": "No parser registered for provider seek",
+  "source_id": "abc123"
+}
+```
+
+Common error codes:
+
+```text
+SOURCE_DISABLED
+INGESTION_MODE_DISABLED
+PARSER_NOT_FOUND
+SOURCE_VALIDATION_FAILED
+FETCH_FAILED
+PARSE_FAILED
+DATABASE_WRITE_FAILED
+DUPLICATE_JOB
+INGESTION_ALREADY_RUNNING
+```
+
+Parser failures for one job must not stop the whole source run.
+
+Source failure must not stop other sources.
+
+---
+
+## 13. Logging
+
+Use structured logging.
+
+Each ingestion run should log:
+
+```text
+run_id
+source_id
+provider
+search_url
+started_at
+finished_at
+new_jobs_count
+updated_jobs_count
+skipped_jobs_count
+error_count
+duration_ms
+```
+
+Each parser error should log:
+
+```text
+run_id
+source_id
+provider
+job_url
+error
+```
